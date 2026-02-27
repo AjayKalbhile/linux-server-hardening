@@ -1,0 +1,9 @@
+# Secrets
+id_rsa id_ed25519 *.pem .env .ssh/
+
+# Logs
+*.log audit.log
+
+# Temp
+*.tmp .DS_Store
+
