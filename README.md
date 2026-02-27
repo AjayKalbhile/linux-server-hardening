@@ -35,7 +35,7 @@ Feature | Status | Protection
 ## 📸 Screenshots
 
 ### Server Security Dashboard
-![Server Dashboard](./screenshots/status-dashboard.png)
+![Server Dashboard](linux-server-hardening/screenshots/status-dashboard.png)
 
 ### Hardening Script Output
 ![Hardening Script](screenshots/rest-hardening.png)
