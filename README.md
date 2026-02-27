@@ -31,3 +31,14 @@ Feature | Status | Protection
    ```bash
    git clone https://github.com/AjayKalbhlile/linux-server-hardening.git
    cd linux-server-hardening
+
+## 📸 Screenshots
+
+### Server Security Dashboard
+![Server Dashboard](./screenshots/status-dashboard.png)
+
+### Hardening Script Output
+![Hardening Script](./screenshots/rest-hardening.png)
+
+### Verification Suite
+![Verification Suite](./screenshots/test-suite.png)
