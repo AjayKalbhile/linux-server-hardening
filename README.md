@@ -38,7 +38,7 @@ Feature | Status | Protection
 ![Server Dashboard](./screenshots/status-dashboard.png)
 
 ### Hardening Script Output
-![Hardening Script](./screenshots/rest-hardening.png)
+![Hardening Script](screenshots/rest-hardening.png)
 
 ### Verification Suite
-![Verification Suite](./screenshots/test-suite.png)
+![Verification Suite](screenshots/test-suite.png)
