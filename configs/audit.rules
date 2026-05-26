@@ -1,0 +1,34 @@
+# audit.rules — Linux Server Hardening v3.0
+# Copy to /etc/audit/rules.d/hardening.rules
+# Apply with: sudo auditctl -R /etc/audit/rules.d/hardening.rules
+
+# Monitor identity files
+-w /etc/passwd         -p wa -k identity
+-w /etc/group          -p wa -k identity
+-w /etc/shadow         -p wa -k identity
+-w /etc/sudoers        -p wa -k actions
+-w /etc/sudoers.d/     -p wa -k actions
+
+# Monitor SSH config changes
+-w /etc/ssh/sshd_config -p wa -k sshd
+
+# Monitor privilege escalation
+-w /bin/su             -p x  -k priv_esc
+-w /usr/bin/sudo       -p x  -k priv_esc
+
+# Monitor auth log
+-w /var/log/auth.log   -p wa -k auth
+
+# Monitor cron
+-w /etc/cron.d/        -p wa -k cron
+-w /etc/crontab        -p wa -k cron
+-w /var/spool/cron/    -p wa -k cron
+
+# Monitor kernel module loading
+-w /sbin/insmod        -p x  -k modules
+-w /sbin/rmmod         -p x  -k modules
+-w /sbin/modprobe      -p x  -k modules
+-a always,exit -F arch=b64 -S init_module -S delete_module -k modules
+
+# Make rules immutable (comment out if you need to update frequently)
+# -e 2

@@ -1,0 +1,34 @@
+# Linux Server Hardening Toolkit — .gitignore
+
+# Secrets — NEVER commit
+.env
+*.env
+secrets.txt
+api_keys.txt
+
+# Generated reports (may contain sensitive system info)
+reports/*.html
+reports/*.json
+/var/log/hardening/
+
+# Backup files
+*.bak
+*.bak.*
+/var/backups/hardening/
+
+# Python / temp
+__pycache__/
+*.pyc
+*.pyo
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Keep these (sanitized samples and templates)
+!reports/Hardening-Report.md
+!reports/generate_report.sh

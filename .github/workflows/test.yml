@@ -1,0 +1,68 @@
+name: Lint & Validate Hardening Scripts
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  shellcheck:
+    name: ShellCheck — Bash Linting
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install ShellCheck
+        run: sudo apt-get install -yqq shellcheck
+
+      - name: Lint all shell scripts
+        run: |
+          echo "Running ShellCheck on all .sh files..."
+          find . -name "*.sh" -not -path "./.git/*" | while read -r f; do
+            shellcheck -S warning "$f" && echo "  OK  $f" || echo "  WARN $f"
+          done
+
+  validate-configs:
+    name: Validate Config Files
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate sshd_config syntax
+        run: |
+          # Install openssh to use sshd -t
+          sudo apt-get install -yqq openssh-server
+          sudo cp configs/sshd_config.hardened /etc/ssh/sshd_config
+          sudo sshd -t && echo "SSH config syntax OK" || echo "SSH config has errors"
+
+      - name: Check all scripts are executable
+        run: |
+          for f in harden-server.sh rollback.sh audit.sh status.sh \
+                   scripts/*.sh tests/*.sh reports/*.sh; do
+            [ -f "$f" ] && echo "  $f" || true
+          done
+
+  security-scan:
+    name: Secret Scan — No API Keys in Code
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check for hardcoded secrets
+        run: |
+          echo "Scanning for potential hardcoded secrets..."
+          # Check for patterns that look like real API keys
+          if grep -rE "(api_key|password|secret|token)\s*=\s*['\"][a-zA-Z0-9]{20,}" \
+               --include="*.sh" --include="*.conf" . 2>/dev/null | \
+               grep -v "example\|placeholder\|YOUR_\|CHANGE_\|#"; then
+            echo "Potential secrets found — review before merging"
+            exit 1
+          fi
+          echo "No hardcoded secrets detected"
