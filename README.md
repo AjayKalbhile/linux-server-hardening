@@ -119,7 +119,7 @@ linux-server-hardening/
 ### Option A — Full Hardening (All Modules)
 
 ```bash
-git clone https://github.com/AjayKalbhlile/linux-server-hardening.git
+git clone https://github.com/AjayKalbhile/linux-server-hardening.git
 cd linux-server-hardening
 chmod +x *.sh scripts/*.sh tests/*.sh reports/*.sh
 sudo ./harden-server.sh
